@@ -1,12 +1,20 @@
 # ecpay.py
-Python 非阻塞式綠界支付 API 串接
-# 前言
-花了老半天時間終於弄懂綠界 API 怎麼搞，網路上查的大部分 guide 要馬是太舊不然就都是 php 的，所以在這裡放個 package 方便後來的開發者使用。  
-綠界自己也有 SDK 但不是 asyncio 而且也不是一個套件 😠 只好自己寫一個。  
-沒有 python 辦不到的事情好嗎 👍👍
+Python 綠界支付 API 串接
 # 安裝
 ```
 pip install git+https://github.com/seriaati/ecpay.py
+```
+# 快速入門
+```py
+from ecpay import ECPayClient
+
+ecpay = ECPayClient(
+    merchant_id=merchant_id,
+    hash_key=hash_key,
+    hash_iv=hash_iv,
+    test=True,
+)
+mac_value, html = ecpay.create_order(...)
 ```
 # 範例
 位於 `/examples` 資料夾
