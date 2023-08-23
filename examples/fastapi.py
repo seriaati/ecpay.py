@@ -29,9 +29,9 @@ class App(fastapi.FastAPI):
         self.mac_id_map: Dict[str, str] = {}
 
     @app.get("/ecpay_redirect")
-    async def ecpay_redirect(self, request: fastapi.Request) -> fastapi.Response:
+    def ecpay_redirect(self, request: fastapi.Request) -> fastapi.Response:
         params = dict(request.query_params)
-        mac_value, html = await self.ecpay.create_order(
+        mac_value, html = self.ecpay.create_order(
             total_amount=params["TotalAmount"],
             trade_desc=params["TradeDesc"],
             item_name=params["ItemName"],
@@ -43,7 +43,7 @@ class App(fastapi.FastAPI):
 
     @app.post("/ecpay_return")
     async def ecpay_return(self, request: fastapi.Request) -> fastapi.Response:
-        params = dict(await request.form())
+        params = dict(request.query_params)
         mac_value = params.pop("CheckMacValue")
         if mac_value != self.mac_id_map[params["CustomField1"]]:  # type: ignore
             return fastapi.Response(content="0|Error", status_code=400)
