@@ -80,7 +80,7 @@ class ECPayClient:
         """
         return html
 
-    async def create_order(
+    def create_order(
         self,
         *,
         total_amount: str,
